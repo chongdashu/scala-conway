@@ -53,6 +53,23 @@ class TestBoard extends FunSuite {
 
         val board : Board = new Board(WIDTH, HEIGHT, RANDOMIZED)
 
+    }
+
+    test ("Cell at board.cells(0)(0) should be at cellIndex=0") {
+        val board = new Board(5, 10)
+        val x = 0
+        val y = 0
+
+        assert(board.getCellIndex(x, y) == 0)
+        assert(board.getCell(0) == board.cells(0)(0))
+
+    }
+
+    test ("Number of neighbors of Cell at cellIndex=0 should be 3") {
+        val board = new Board(5, 10)
+        val CELL_INDEX = 0
+
+        assert(board.getNeighborsAtIndex(CELL_INDEX).length == 3)
 
     }
 

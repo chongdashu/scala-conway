@@ -33,8 +33,13 @@ case class Board(width : Integer, height : Integer, randomizeCells : Boolean = f
         }
     }
 
+    def getCell(cellIndex : Int) : Cell = {
+        val cellYX = getCellYX(cellIndex)
+        return cells(cellYX._1)(cellYX._2)
+    }
+
     def getNeighborsAtIndex(cellIndex : Int): Array[Cell] = {
-        val offsets = Set(
+        val offsets : List[Tuple2[Int, Int]] = List(
             (-1, -1), (0, -1), (+1, -1),
             (-1, +0),          (+1, +0),
             (-1, +1), (0, +1), (+1, +1)
@@ -45,12 +50,14 @@ case class Board(width : Integer, height : Integer, randomizeCells : Boolean = f
         val (x, y) = getCellXY(cellIndex)
 
 
-        for ((offsetX, offsetY) <- offsets) {
+        for ((offsetX, offsetY)<- offsets) {
             val (neighborX, neighborY) = (x+offsetX, y+offsetY)
             if (isValidLocation(neighborX, neighborY)) {
                 neighbors += cells(neighborY)(neighborX)
             }
         }
+
+        return neighbors.toArray
     }
 
     def getCellYX(cellIndex : Int) : (Int, Int) = {
