@@ -146,6 +146,32 @@ class TestBoard extends FunSuite {
         assert(EXPECTED_STRING == outputString)
     }
 
+    test ("createFromString() [15x15 Board] Create a Pulsar board") {
+        val EXPECTED_STRING =
+            "000000000000000" + "\n" +
+            "000111000111000" + "\n" +
+            "000000000000000" + "\n" +
+            "010000101000010" + "\n" +
+            "010000101000010" + "\n" +
+            "010000101000010" + "\n" +
+            "000111000111000" + "\n" +
+            "000000000000000" + "\n" +
+            "000111000111000" + "\n" +
+            "010000101000010" + "\n" +
+            "010000101000010" + "\n" +
+            "010000101000010" + "\n" +
+            "000000000000000" + "\n" +
+            "000111000111000" + "\n" +
+            "000000000000000" + "\n"
+
+        val inputString = EXPECTED_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
+        val board = Board.createFromString(inputString)
+        var outputString = board.printString()
+        outputString = outputString.replace(Cell.STRING_DEAD, "0").replace(Cell.STRING_ALIVE, "1").replace(" ", "")
+
+        assert(EXPECTED_STRING == outputString)
+    }
+
     test ("simulate() [4x4 Board] [Still-Life] Block: Simulate 1 step.") {
         val EXPECTED_STRING =
                     "0000\n" +
