@@ -38,6 +38,10 @@ case class Board(width : Integer, height : Integer, randomizeCells : Boolean = f
         return cells(cellYX._1)(cellYX._2)
     }
 
+    def getAliveNeighborsAtIndex(cellIndex : Int) = {
+        return  getNeighborsAtIndex(cellIndex).filter( x => x.alive )
+    }
+
     def getNeighborsAtIndex(cellIndex : Int): Array[Cell] = {
         val offsets : List[Tuple2[Int, Int]] = List(
             (-1, -1), (0, -1), (+1, -1),
