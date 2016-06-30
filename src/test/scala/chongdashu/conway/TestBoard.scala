@@ -97,7 +97,7 @@ class TestBoard extends FunSuite {
 
     }
 
-    test ("[5x5 Board] Creating all alive cells using createFromString") {
+    test ("createFromString() [5x5 Board] Creating all alive cells.") {
         val EXPECTED_STRING =
             "11111\n" +
             "11111\n" +
@@ -105,20 +105,16 @@ class TestBoard extends FunSuite {
             "11111\n" +
             "11111\n"
 
-        var inputString = EXPECTED_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
-
+        val inputString = EXPECTED_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
         val board = Board.createFromString(inputString)
-
         var outputString = board.printString()
         outputString = outputString.replace(Cell.STRING_DEAD, "0").replace(Cell.STRING_ALIVE, "1").replace(" ", "")
 
-
         assert(EXPECTED_STRING == outputString)
-
 
     }
 
-    test ("[5x5 Board] Creating all dead cells using createFromString") {
+    test ("createFromString() [5x5 Board] Creating all dead cells.") {
         val EXPECTED_STRING =
             "00000\n" +
             "00000\n" +
@@ -126,14 +122,71 @@ class TestBoard extends FunSuite {
             "00000\n" +
             "00000\n"
 
-        var inputString = EXPECTED_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
+        val inputString = EXPECTED_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
         val board = Board.createFromString(inputString)
         var outputString = board.printString()
         outputString = outputString.replace(Cell.STRING_DEAD, "0").replace(Cell.STRING_ALIVE, "1").replace(" ", "")
 
         assert(EXPECTED_STRING == outputString)
+    }
+
+    test ("createFromString() [5x5 Board] Some dead, some alive.") {
+        val EXPECTED_STRING =
+                    "00001\n" +
+                    "10000\n" +
+                    "00100\n" +
+                    "00000\n" +
+                    "10010\n"
+
+        val inputString = EXPECTED_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
+        val board = Board.createFromString(inputString)
+        var outputString = board.printString()
+        outputString = outputString.replace(Cell.STRING_DEAD, "0").replace(Cell.STRING_ALIVE, "1").replace(" ", "")
+
+        assert(EXPECTED_STRING == outputString)
+    }
+
+    test ("simulate() [4x4 Board] [Still-Life] Block: Simulate 1 step.") {
+        val EXPECTED_STRING =
+                    "0000\n" +
+                    "0110\n" +
+                    "0110\n" +
+                    "0000\n"
 
 
+        val inputString = EXPECTED_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
+        val board = Board.createFromString(inputString)
+        board.simulate()
+        var outputString = board.printString()
+        outputString = outputString.replace(Cell.STRING_DEAD, "0").replace(Cell.STRING_ALIVE, "1").replace(" ", "")
+
+        assert(EXPECTED_STRING == outputString)
+    }
+
+    test ("simulate() [5x5 Board] [Oscillators] Blinker: Simulate 1 step.") {
+        val STARTING_STRING =
+                    "00000\n" +
+                    "00000\n" +
+                    "01110\n" +
+                    "00000\n" +
+                    "00000\n"
+
+        val EXPECTED_STRING =
+                    "00000\n" +
+                    "00100\n" +
+                    "00100\n" +
+                    "00100\n" +
+                    "00000\n"
+
+
+        val inputString = STARTING_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
+        val board = Board.createFromString(inputString)
+        board.simulate()
+        var outputString = board.printString()
+
+        outputString = outputString.replace(Cell.STRING_DEAD, "0").replace(Cell.STRING_ALIVE, "1").replace(" ", "")
+
+        assert(EXPECTED_STRING == outputString)
     }
 
 }

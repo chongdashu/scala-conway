@@ -29,7 +29,7 @@ case class Board(width : Integer, height : Integer, randomizeCells : Boolean = f
         cells(i) = new Array(width)
         for (j <- 0 to (cells(i).length-1)) {
             val index = i*width + j
-            cells(i)(j) = Cell(index, if (randomizeCells) Random.nextBoolean() else false)
+            cells(i)(j) = Cell(if (randomizeCells) Random.nextBoolean() else false)
         }
     }
 
@@ -81,7 +81,22 @@ case class Board(width : Integer, height : Integer, randomizeCells : Boolean = f
     }
 
     def simulate() : Unit = {
+        val totalCells = width * height
+        for (cellIndex <- 0 to totalCells-1) {
+            var cell = getCell(cellIndex)
+            val aliveNeighbors = getAliveNeighborsAtIndex(cellIndex)
+            if (cell.alive) {
+                cell.aliveNext = aliveNeighbors.length >= 2 && aliveNeighbors.length < 4
+            }
+            else {
+                cell.aliveNext = aliveNeighbors.length == 3
+            }
+        }
 
+        for (cellIndex <- 0 to totalCells-1) {
+            var cell = getCell(cellIndex)
+            cell.alive = cell.aliveNext
+        }
     }
 
     def printString() : String = {
