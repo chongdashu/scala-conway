@@ -65,9 +65,33 @@ class TestBoard extends FunSuite {
 
     }
 
-    test ("Number of neighbors of Cell at cellIndex=0 should be 3") {
+    test ("[5x10 Board] Number of neighbors of Cell at cellIndex=0 should be 3") {
         val board = new Board(5, 10)
         val CELL_INDEX = 0
+
+        assert(board.getNeighborsAtIndex(CELL_INDEX).length == 3)
+
+    }
+
+    test ("[5x10 Board] Number of neighbors of Cell at cellIndex=1 should be 5") {
+        val board = new Board(5, 10)
+        val CELL_INDEX = 1
+
+        assert(board.getNeighborsAtIndex(CELL_INDEX).length == 5)
+
+    }
+
+    test ("[5x10 Board] Number of neighbors of Cell at cellIndex=6 should be 8") {
+        val board = new Board(5, 10)
+        val CELL_INDEX = 6
+
+        assert(board.getNeighborsAtIndex(CELL_INDEX).length == 8)
+
+    }
+
+    test ("[5x10 Board] Number of neighbors of Cell at cellIndex=49 should be 3") {
+        val board = new Board(5, 10)
+        val CELL_INDEX = 49
 
         assert(board.getNeighborsAtIndex(CELL_INDEX).length == 3)
 
