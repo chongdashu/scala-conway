@@ -38,8 +38,8 @@ case class Board(width : Integer, height : Integer, randomizeCells : Boolean = f
         return cells(cellYX._1)(cellYX._2)
     }
 
-    def getAliveNeighborsAtIndex(cellIndex : Int) = {
-        return  getNeighborsAtIndex(cellIndex).filter( x => x.alive )
+    def getAliveNeighborsAtIndex(cellIndex : Int) : Array[Cell] = {
+        return getNeighborsAtIndex(cellIndex).filter( x => x.alive )
     }
 
     def getNeighborsAtIndex(cellIndex : Int): Array[Cell] = {
@@ -97,6 +97,27 @@ case class Board(width : Integer, height : Integer, randomizeCells : Boolean = f
         return str
     }
 
+}
+
+object Board {
+
+    def createFromString(boardString : String) : Board = {
+        val rows : Array[String] = boardString.split("\\r?\\n")
+        val nRows = rows.length
+        val nCols = rows(0).length
+
+        val board = new Board(nCols, nRows)
+
+        var cellIndex = 0
+        for (row <- rows) {
+            for (cellString <- row) {
+                board.getCell(cellIndex).alive = cellString == Cell.STRING_ALIVE.charAt(0)
+                cellIndex += 1
+            }
+        }
+
+        return board
+    }
 }
 
 

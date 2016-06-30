@@ -97,4 +97,43 @@ class TestBoard extends FunSuite {
 
     }
 
+    test ("[5x5 Board] Creating all alive cells using createFromString") {
+        val EXPECTED_STRING =
+            "11111\n" +
+            "11111\n" +
+            "11111\n" +
+            "11111\n" +
+            "11111\n"
+
+        var inputString = EXPECTED_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
+
+        val board = Board.createFromString(inputString)
+
+        var outputString = board.printString()
+        outputString = outputString.replace(Cell.STRING_DEAD, "0").replace(Cell.STRING_ALIVE, "1").replace(" ", "")
+
+
+        assert(EXPECTED_STRING == outputString)
+
+
+    }
+
+    test ("[5x5 Board] Creating all dead cells using createFromString") {
+        val EXPECTED_STRING =
+            "00000\n" +
+            "00000\n" +
+            "00000\n" +
+            "00000\n" +
+            "00000\n"
+
+        var inputString = EXPECTED_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
+        val board = Board.createFromString(inputString)
+        var outputString = board.printString()
+        outputString = outputString.replace(Cell.STRING_DEAD, "0").replace(Cell.STRING_ALIVE, "1").replace(" ", "")
+
+        assert(EXPECTED_STRING == outputString)
+
+
+    }
+
 }

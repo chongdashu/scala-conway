@@ -13,7 +13,12 @@ case class Cell (val index : Int, var alive : Boolean = false) {
 
 object Cell {
     val STRING_ALIVE = "*"
-    val STRING_DEAD = " "
+    val STRING_DEAD = "."
 
     // def apply(alive: Boolean = false)
+
+//    def createFromString(cellString : String) : Cell = {
+//
+//        return new Cell(-1, cellString==STRING_ALIVE)
+//    }
 }
