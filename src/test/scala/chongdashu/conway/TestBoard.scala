@@ -46,4 +46,14 @@ class TestBoard extends FunSuite {
         assert(board.cells(0).length == WIDTH, "Board #columns should be 10")
     }
 
+    test("A 10 x 10 randomized board should not throw exceptions") {
+        val WIDTH : Int = 10;
+        val HEIGHT : Int = 5;
+        val RANDOMIZED : Boolean = true
+
+        val board : Board = new Board(WIDTH, HEIGHT, RANDOMIZED)
+
+
+    }
+
 }
