@@ -119,14 +119,20 @@ object Board {
     def createFromString(boardString : String) : Board = {
         val rows : Array[String] = boardString.split("\\r?\\n")
         val nRows = rows.length
-        val nCols = rows(0).length
+        val nCols = rows.map(x => x.length).reduceLeft(Math.max)
 
         val board = new Board(nCols, nRows)
 
         var cellIndex = 0
         for (row <- rows) {
+            var colIndex = 0
             for (cellString <- row) {
                 board.getCell(cellIndex).alive = cellString == Cell.STRING_ALIVE.charAt(0)
+                cellIndex += 1
+                colIndex += 1
+            }
+            while (colIndex < nCols) {
+                colIndex += 1
                 cellIndex += 1
             }
         }

@@ -2,6 +2,11 @@ package chongdashu.conway
 
 import org.scalatest.FunSuite
 
+object TestBoard {
+    val STRING_ALIVE : String = "1"
+    val STRING_DEAD : String = "0"
+}
+
 /**
   * Created by culim on 6/30/16.
   */
@@ -100,15 +105,15 @@ class TestBoard extends FunSuite {
     test ("createFromString() [5x5 Board] Creating all alive cells.") {
         val EXPECTED_STRING =
             "11111\n" +
-            "11111\n" +
-            "11111\n" +
-            "11111\n" +
-            "11111\n"
+                    "11111\n" +
+                    "11111\n" +
+                    "11111\n" +
+                    "11111\n"
 
-        val inputString = EXPECTED_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
+        val inputString = EXPECTED_STRING.replace(TestBoard.STRING_DEAD, Cell.STRING_DEAD).replace(TestBoard.STRING_ALIVE, Cell.STRING_ALIVE)
         val board = Board.createFromString(inputString)
         var outputString = board.printString()
-        outputString = outputString.replace(Cell.STRING_DEAD, "0").replace(Cell.STRING_ALIVE, "1").replace(" ", "")
+        outputString = outputString.replace(Cell.STRING_DEAD, TestBoard.STRING_DEAD).replace(Cell.STRING_ALIVE, TestBoard.STRING_ALIVE).replace(" ", "")
 
         assert(EXPECTED_STRING == outputString)
 
@@ -117,31 +122,54 @@ class TestBoard extends FunSuite {
     test ("createFromString() [5x5 Board] Creating all dead cells.") {
         val EXPECTED_STRING =
             "00000\n" +
-            "00000\n" +
-            "00000\n" +
-            "00000\n" +
-            "00000\n"
+                    "00000\n" +
+                    "00000\n" +
+                    "00000\n" +
+                    "00000\n"
 
-        val inputString = EXPECTED_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
+        val inputString = EXPECTED_STRING.replace(TestBoard.STRING_DEAD, Cell.STRING_DEAD).replace(TestBoard.STRING_ALIVE, Cell.STRING_ALIVE)
         val board = Board.createFromString(inputString)
         var outputString = board.printString()
-        outputString = outputString.replace(Cell.STRING_DEAD, "0").replace(Cell.STRING_ALIVE, "1").replace(" ", "")
+        outputString = outputString.replace(Cell.STRING_DEAD, TestBoard.STRING_DEAD).replace(Cell.STRING_ALIVE, TestBoard.STRING_ALIVE).replace(" ", "")
 
         assert(EXPECTED_STRING == outputString)
     }
 
     test ("createFromString() [5x5 Board] Some dead, some alive.") {
         val EXPECTED_STRING =
-                    "00001\n" +
+            "00001\n" +
                     "10000\n" +
                     "00100\n" +
                     "00000\n" +
                     "10010\n"
 
-        val inputString = EXPECTED_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
+        val inputString = EXPECTED_STRING.replace(TestBoard.STRING_DEAD, Cell.STRING_DEAD).replace(TestBoard.STRING_ALIVE, Cell.STRING_ALIVE)
         val board = Board.createFromString(inputString)
         var outputString = board.printString()
-        outputString = outputString.replace(Cell.STRING_DEAD, "0").replace(Cell.STRING_ALIVE, "1").replace(" ", "")
+        outputString = outputString.replace(Cell.STRING_DEAD, TestBoard.STRING_DEAD).replace(Cell.STRING_ALIVE, TestBoard.STRING_ALIVE).replace(" ", "")
+
+        assert(EXPECTED_STRING == outputString)
+    }
+
+    test ("createFromString() [5x5 Board] Some empties unspecified") {
+        val INPUT_STRING =
+            "00001\n" +
+                    "10\n" +
+                    "0010\n" +
+                    "\n" +
+                    "10010\n"
+
+        val EXPECTED_STRING =
+            "00001\n" +
+                    "10000\n" +
+                    "00100\n" +
+                    "00000\n" +
+                    "10010\n"
+
+        val inputString = INPUT_STRING.replace(TestBoard.STRING_DEAD, Cell.STRING_DEAD).replace(TestBoard.STRING_ALIVE, Cell.STRING_ALIVE)
+        val board = Board.createFromString(inputString)
+        var outputString = board.printString()
+        outputString = outputString.replace(Cell.STRING_DEAD, TestBoard.STRING_DEAD).replace(Cell.STRING_ALIVE, TestBoard.STRING_ALIVE).replace(" ", "")
 
         assert(EXPECTED_STRING == outputString)
     }
@@ -149,68 +177,68 @@ class TestBoard extends FunSuite {
     test ("createFromString() [15x15 Board] Create a Pulsar board") {
         val EXPECTED_STRING =
             "000000000000000" + "\n" +
-            "000111000111000" + "\n" +
-            "000000000000000" + "\n" +
-            "010000101000010" + "\n" +
-            "010000101000010" + "\n" +
-            "010000101000010" + "\n" +
-            "000111000111000" + "\n" +
-            "000000000000000" + "\n" +
-            "000111000111000" + "\n" +
-            "010000101000010" + "\n" +
-            "010000101000010" + "\n" +
-            "010000101000010" + "\n" +
-            "000000000000000" + "\n" +
-            "000111000111000" + "\n" +
-            "000000000000000" + "\n"
+                    "000111000111000" + "\n" +
+                    "000000000000000" + "\n" +
+                    "010000101000010" + "\n" +
+                    "010000101000010" + "\n" +
+                    "010000101000010" + "\n" +
+                    "000111000111000" + "\n" +
+                    "000000000000000" + "\n" +
+                    "000111000111000" + "\n" +
+                    "010000101000010" + "\n" +
+                    "010000101000010" + "\n" +
+                    "010000101000010" + "\n" +
+                    "000000000000000" + "\n" +
+                    "000111000111000" + "\n" +
+                    "000000000000000" + "\n"
 
-        val inputString = EXPECTED_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
+        val inputString = EXPECTED_STRING.replace(TestBoard.STRING_DEAD, Cell.STRING_DEAD).replace(TestBoard.STRING_ALIVE, Cell.STRING_ALIVE)
         val board = Board.createFromString(inputString)
         var outputString = board.printString()
-        outputString = outputString.replace(Cell.STRING_DEAD, "0").replace(Cell.STRING_ALIVE, "1").replace(" ", "")
+        outputString = outputString.replace(Cell.STRING_DEAD, TestBoard.STRING_DEAD).replace(Cell.STRING_ALIVE, TestBoard.STRING_ALIVE).replace(" ", "")
 
         assert(EXPECTED_STRING == outputString)
     }
 
     test ("simulate() [4x4 Board] [Still-Life] Block: Simulate 1 step.") {
         val EXPECTED_STRING =
-                    "0000\n" +
+            "0000\n" +
                     "0110\n" +
                     "0110\n" +
                     "0000\n"
 
 
-        val inputString = EXPECTED_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
+        val inputString = EXPECTED_STRING.replace(TestBoard.STRING_DEAD, Cell.STRING_DEAD).replace(TestBoard.STRING_ALIVE, Cell.STRING_ALIVE)
         val board = Board.createFromString(inputString)
         board.simulate()
         var outputString = board.printString()
-        outputString = outputString.replace(Cell.STRING_DEAD, "0").replace(Cell.STRING_ALIVE, "1").replace(" ", "")
+        outputString = outputString.replace(Cell.STRING_DEAD, TestBoard.STRING_DEAD).replace(Cell.STRING_ALIVE, TestBoard.STRING_ALIVE).replace(" ", "")
 
         assert(EXPECTED_STRING == outputString)
     }
 
     test ("simulate() [5x5 Board] [Oscillators] Blinker: Simulate 1 step.") {
         val STARTING_STRING =
-                    "00000\n" +
+            "00000\n" +
                     "00000\n" +
                     "01110\n" +
                     "00000\n" +
                     "00000\n"
 
         val EXPECTED_STRING =
-                    "00000\n" +
+            "00000\n" +
                     "00100\n" +
                     "00100\n" +
                     "00100\n" +
                     "00000\n"
 
 
-        val inputString = STARTING_STRING.replace("0", Cell.STRING_DEAD).replace("1", Cell.STRING_ALIVE)
+        val inputString = STARTING_STRING.replace(TestBoard.STRING_DEAD, Cell.STRING_DEAD).replace(TestBoard.STRING_ALIVE, Cell.STRING_ALIVE)
         val board = Board.createFromString(inputString)
         board.simulate()
         var outputString = board.printString()
 
-        outputString = outputString.replace(Cell.STRING_DEAD, "0").replace(Cell.STRING_ALIVE, "1").replace(" ", "")
+        outputString = outputString.replace(Cell.STRING_DEAD, TestBoard.STRING_DEAD).replace(Cell.STRING_ALIVE, TestBoard.STRING_ALIVE).replace(" ", "")
 
         assert(EXPECTED_STRING == outputString)
     }

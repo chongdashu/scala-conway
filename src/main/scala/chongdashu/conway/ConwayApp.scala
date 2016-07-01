@@ -33,7 +33,7 @@ object ConwayApp {
         println(board.printString())
 
         var lastUpdate = System.currentTimeMillis()
-        val INTERVAL_MSEC = 500
+        val INTERVAL_MSEC = 250
         while (true) {
             if (System.currentTimeMillis() - lastUpdate >= INTERVAL_MSEC) {
                 lastUpdate = System.currentTimeMillis()
@@ -41,7 +41,7 @@ object ConwayApp {
                 println(board.printString())
             }
             else {
-                Thread.sleep(50)
+                Thread.sleep(Math.min(1,Math.max(100, INTERVAL_MSEC/10)))
             }
 
         }
