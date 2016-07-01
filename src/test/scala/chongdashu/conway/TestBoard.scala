@@ -51,7 +51,7 @@ class TestBoard extends FunSuite {
         assert(board.cells(0).length == WIDTH, "Board #columns should be 10")
     }
 
-    test("A 10 x 10 randomized board should not throw exceptions") {
+    test("Board() A 10 x 10 randomized board should not throw exceptions") {
         val WIDTH : Int = 10;
         val HEIGHT : Int = 5;
         val RANDOMIZED : Boolean = true
@@ -60,7 +60,7 @@ class TestBoard extends FunSuite {
 
     }
 
-    test ("Cell at board.cells(0)(0) should be at cellIndex=0") {
+    test ("getCellIndex() Cell at board.cells(0)(0) should be at cellIndex=0") {
         val board = new Board(5, 10)
         val x = 0
         val y = 0
@@ -70,7 +70,7 @@ class TestBoard extends FunSuite {
 
     }
 
-    test ("[5x10 Board] Number of neighbors of Cell at cellIndex=0 should be 3") {
+    test ("getNeighborsAtIndex() [5x10 Board] Number of neighbors of Cell at cellIndex=0 should be 3") {
         val board = new Board(5, 10)
         val CELL_INDEX = 0
 
@@ -78,7 +78,7 @@ class TestBoard extends FunSuite {
 
     }
 
-    test ("[5x10 Board] Number of neighbors of Cell at cellIndex=1 should be 5") {
+    test ("getNeighborsAtIndex() [5x10 Board] Number of neighbors of Cell at cellIndex=1 should be 5") {
         val board = new Board(5, 10)
         val CELL_INDEX = 1
 
@@ -86,7 +86,7 @@ class TestBoard extends FunSuite {
 
     }
 
-    test ("[5x10 Board] Number of neighbors of Cell at cellIndex=6 should be 8") {
+    test ("getNeighborsAtIndex() [5x10 Board] Number of neighbors of Cell at cellIndex=6 should be 8") {
         val board = new Board(5, 10)
         val CELL_INDEX = 6
 
@@ -94,7 +94,7 @@ class TestBoard extends FunSuite {
 
     }
 
-    test ("[5x10 Board] Number of neighbors of Cell at cellIndex=49 should be 3") {
+    test ("getNeighborsAtIndex() [5x10 Board] Number of neighbors of Cell at cellIndex=49 should be 3") {
         val board = new Board(5, 10)
         val CELL_INDEX = 49
 
