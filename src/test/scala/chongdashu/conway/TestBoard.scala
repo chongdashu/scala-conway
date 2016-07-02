@@ -20,9 +20,8 @@ class TestBoard extends FunSuite {
 
         assert(board.width == WIDTH, "Board's width should be 10")
         assert(board.height == HEIGHT, "Board's height should be 10")
-        assert(board.cells.length == HEIGHT, "Board #rows should be 10")
+        assert(board.cells.length == WIDTH*HEIGHT, "Board #rows should be 10")
         assert(board.cells(0) !== None, "Board rows should be initialized")
-        assert(board.cells(0).length == WIDTH, "Board #columns should be 10")
     }
 
     test("A created 5 x 10 board should have the correct dimensions") {
@@ -33,9 +32,8 @@ class TestBoard extends FunSuite {
 
         assert(board.width == WIDTH, "Board's width should be 5")
         assert(board.height == HEIGHT, "Board's height should be 10")
-        assert(board.cells.length == HEIGHT, "Board #rows should be 10")
+        assert(board.cells.length == WIDTH*HEIGHT, "Board #rows should be 10")
         assert(board.cells(0) !== None, "Board rows should be initialized")
-        assert(board.cells(0).length == WIDTH, "Board #columns should be 5")
     }
 
     test("A created 10 x 5 board should have the correct dimensions") {
@@ -46,9 +44,8 @@ class TestBoard extends FunSuite {
 
         assert(board.width == WIDTH, "Board's width should be 5")
         assert(board.height == HEIGHT, "Board's height should be 10")
-        assert(board.cells.length == HEIGHT, "Board #rows should be 5")
+        assert(board.cells.length == WIDTH*HEIGHT, "Board #rows should be 5")
         assert(board.cells(0) !== None, "Board rows should be initialized")
-        assert(board.cells(0).length == WIDTH, "Board #columns should be 10")
     }
 
     test("Board() A 10 x 10 randomized board should not throw exceptions") {
@@ -66,7 +63,7 @@ class TestBoard extends FunSuite {
         val y = 0
 
         assert(board.getCellIndex(x, y) == 0)
-        assert(board.getCell(0) == board.cells(0)(0))
+        assert(board.getCell(0) == board.cells(0))
 
     }
 
@@ -105,15 +102,18 @@ class TestBoard extends FunSuite {
     test ("createFromString() [5x5 Board] Creating all alive cells.") {
         val EXPECTED_STRING =
             "11111\n" +
-                    "11111\n" +
-                    "11111\n" +
-                    "11111\n" +
-                    "11111\n"
+            "11111\n" +
+            "11111\n" +
+            "11111\n" +
+            "11111\n"
 
         val inputString = EXPECTED_STRING.replace(TestBoard.STRING_DEAD, Cell.STRING_DEAD).replace(TestBoard.STRING_ALIVE, Cell.STRING_ALIVE)
         val board = Board.createFromString(inputString)
         var outputString = board.printString()
         outputString = outputString.replace(Cell.STRING_DEAD, TestBoard.STRING_DEAD).replace(Cell.STRING_ALIVE, TestBoard.STRING_ALIVE).replace(" ", "")
+
+        println(outputString)
+        println(EXPECTED_STRING)
 
         assert(EXPECTED_STRING == outputString)
 
@@ -239,6 +239,43 @@ class TestBoard extends FunSuite {
         var outputString = board.printString()
 
         outputString = outputString.replace(Cell.STRING_DEAD, TestBoard.STRING_DEAD).replace(Cell.STRING_ALIVE, TestBoard.STRING_ALIVE).replace(" ", "")
+
+        assert(EXPECTED_STRING == outputString)
+    }
+
+    test ("simulate() [5x5 Board] [Bottom Pattern] Simulate 1 step.") {
+        val STARTING_STRING =
+            "00000\n" +
+            "01010\n" +
+            "00110\n"
+
+        val EXPECTED_STRING =
+            "00000\n" +
+            "00010\n" +
+            "01010\n"
+
+
+        val inputString = STARTING_STRING.replace(TestBoard.STRING_DEAD, Cell.STRING_DEAD).replace(TestBoard.STRING_ALIVE, Cell.STRING_ALIVE)
+        val board = Board.createFromString(inputString)
+
+        val cells = board.cells
+
+        assert(!cells(11).alive, "Before simulate, Cell 11  should be dead")
+        assert(!cells(7).alive, "Before simulate, Cell 7  should be dead")
+        assert(board.getAliveNeighborsAtIndex(7).length == 4, "Before simulate, Cell 7 should have 4 alive neighbors")
+        assert(board.getAliveNeighborsAtIndex(11).length == 2, "Before simulate, Cell 11 should have 2 alive neighbors")
+
+        board.simulate()
+
+        var outputString = board.printString()
+
+        outputString = outputString.replace(Cell.STRING_DEAD, TestBoard.STRING_DEAD).replace(Cell.STRING_ALIVE, TestBoard.STRING_ALIVE).replace(" ", "")
+        println("START:")
+        println(inputString)
+        println("EXPECTED")
+        println(EXPECTED_STRING)
+        println("ACTUAL")
+        println(outputString)
 
         assert(EXPECTED_STRING == outputString)
     }

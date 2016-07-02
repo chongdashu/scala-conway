@@ -11,31 +11,13 @@ case class Board(width : Integer, height : Integer, randomizeCells : Boolean = f
 
     var generation : Int = 0
 
-    /**
-      * The internal representation of the board is
-      * an array of array of Cells.
-      *
-      * The convention used is the origin in the top-left
-      * corner of the board.
-      *
-      * | (0,0) | (0, 1) | (0, 2) | ... | (0, width)
-      * | (1,0) | (1, 1) | (1, 2) | ... | (1, width)
-      * | ...
-      * | (h, 0) | (h, 1) | (h, 2) | ... | (h, width)
-      *
-      */
-    val cells : Array[Array[Cell]] = new Array[Array[Cell]](height)
+    val cells  = new Array[Cell](width * height)
     for (i  <- 0 to (cells.length-1)) {
-        cells(i) = new Array(width)
-        for (j <- 0 to (cells(i).length-1)) {
-            val index = i*width + j
-            cells(i)(j) = Cell(if (randomizeCells) Random.nextBoolean() else false)
-        }
+        cells(i) = Cell(if (randomizeCells) Random.nextBoolean() else false)
     }
 
     def getCell(cellIndex : Int) : Cell = {
-        val cellYX = getCellYX(cellIndex)
-        return cells(cellYX._1)(cellYX._2)
+        return cells(cellIndex)
     }
 
     def getAliveNeighborsAtIndex(cellIndex : Int) : Array[Cell] = {
@@ -57,7 +39,8 @@ case class Board(width : Integer, height : Integer, randomizeCells : Boolean = f
         for ((offsetX, offsetY)<- offsets) {
             val (neighborX, neighborY) = (x+offsetX, y+offsetY)
             if (isValidLocation(neighborX, neighborY)) {
-                neighbors += cells(neighborY)(neighborX)
+                val cellIndex = getCellIndex(neighborX, neighborY)
+                neighbors += cells(cellIndex)
             }
         }
 
@@ -86,11 +69,13 @@ case class Board(width : Integer, height : Integer, randomizeCells : Boolean = f
             var cell = getCell(cellIndex)
             val aliveNeighbors = getAliveNeighborsAtIndex(cellIndex)
             if (cell.alive) {
-                cell.aliveNext = aliveNeighbors.length >= 2 && aliveNeighbors.length < 4
+                cell.aliveNext = (aliveNeighbors.length == 2 || aliveNeighbors.length == 3)
             }
             else {
                 cell.aliveNext = aliveNeighbors.length == 3
             }
+
+            println("cell[" + cellIndex +"], now " + cell.alive + " has " + aliveNeighbors.length + " alive neighbors: next state=" + cell.aliveNext)
         }
 
         for (cellIndex <- 0 to totalCells-1) {
@@ -101,13 +86,19 @@ case class Board(width : Integer, height : Integer, randomizeCells : Boolean = f
 
     def printString() : String = {
         var str = ""
-        for (row <- cells) {
-            for (col <- row) {
-                str += col.printString()
-                str += " "
+
+        for ((cell, cellIndex) <- cells.zipWithIndex) {
+
+            if (cellIndex > 0 && cellIndex % width == 0) {
+                str += "\n"
             }
-            str += "\n"
+
+            str += cell.printString()
+            str += " "
+
         }
+
+        str += "\n"
 
         return str
     }
